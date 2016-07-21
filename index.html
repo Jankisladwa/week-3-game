@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>The Psychic Game</title>
+
+  
+</head>
+<body>
+
+<div id="game">
+	<p>Press any key to start playing</p>
+</div>
+
+<div id="something"></div>
+
+<script type="text/javascript">
+
+//set's the computer choices
+var computerChoices =['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+
+// dclares the user score board
+var wins = 0;
+var losses =0;
+var	guessesleft = 10;
+
+//generates the computer guess
+var computerGuess = generateRandomComputerGuess();
+console.log(computerGuess)
+
+//
+document.onkeyup = function(keyEvent) {
+	var userGuess = String.fromCharCode(keyEvent.keyCode).toLowerCase();
+	document.getElementById('something').innerHTML = ' '
+
+// // multiply random function (0-1) by the length of the array. This gives us a number between 0-25. 
+// 	var randomNumber = Math.random() * computerChoices.length 
+// //25.1
+// 	var randomIndex = Math.floor(randomNumber);
+// //25
+// 	var computerGuess = computerChoices[randomIndex];
+
+	if (userGuess == computerGuess) {
+		wins++; 
+		computerGuess = generateRandomComputerGuess();
+		guessesleft = 10;
+	}
+
+	else {
+	 		losses++;
+	 		guessesleft--;
+	 	}
+
+
+	if (guessesleft == 0){
+		document.getElementById('something').innerHTML = '<p>You lose</p>'
+		guessesleft = 10;
+		losses = 0;
+		wins =0;
+		computerGuess = generateRandomComputerGuess();
+		console.log(computerGuess)
+	}
+
+	console.log(computerGuess);
+	console.log("userguess" + userGuess);
+	console.log("wins" + wins);
+	console.log("losses" + losses);
+}
+
+function generateRandomComputerGuess (){
+	var randomNumber = Math.random() * computerChoices.length 
+	var randomIndex = Math.floor(randomNumber);
+	var computerGuess = computerChoices[randomIndex];
+	return(computerGuess);
+}
+
+	var html = "<p>Press any key to start playing</p>" +
+		"<p>wins: " + wins + "</p>" +
+		"<p>losses: " + losses + "</p>" +
+		"<p>guessesleft: " + guessesleft + "</p>";
+
+		//ID
+		document.querySelector('#game').innerHTML = html;
+
+</script>
+	
+</body>
+</html>
